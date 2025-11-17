@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "7bbb61e7-3394-4a9c-9d52-027b4d055a4b",
+		"name": "My Collection",
+		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50110043",
+		"_collection_link": "https://hannad0714-3605247.postman.co/workspace/Hanna-Eisner-%255BDalsace%255D's-Worksp~b7aa0be6-c113-4ef9-8839-c64a64e2d6cd/collection/50110043-7bbb61e7-3394-4a9c-9d52-027b4d055a4b?action=share&source=collection_link&creator=50110043"
+	},
+	"item": [
+		{
+			"name": "Q1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let json = pm.response.json();",
+							"",
+							"// -- 1",
+							"// Count results",
+							"let count_result = json.results.length;",
+							"console.log(\"Results count:\", count_result);",
+							"",
+							"// Fail if > 100",
+							"pm.test(\"Results count must be ≤ 100\", function () {",
+							"    pm.expect(count_result).to.be.at.most(100);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.gov.il/govil-landing-page-api/he",
+					"protocol": "https",
+					"host": [
+						"www",
+						"gov",
+						"il"
+					],
+					"path": [
+						"govil-landing-page-api",
+						"he"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Q2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let json = pm.response.json();\r",
+							"\r",
+							"let count = 0;\r",
+							"\r",
+							"json.result.forEach(category => {\r",
+							"\r",
+							"    if (category.title && category.title.includes(\"דירה\")) {\r",
+							"        count++;\r",
+							"    }\r",
+							"\r",
+							"    if (category.navItems && Array.isArray(category.navItems)) {\r",
+							"        category.navItems.forEach(service => {\r",
+							"            if (service.title && service.title.includes(\"דירה\")) {\r",
+							"                count++;\r",
+							"            }\r",
+							"        });\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"console.log(\"Total:\", count);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.gov.il/govilHF/api/GetServices?culture=he",
+					"protocol": "https",
+					"host": [
+						"www",
+						"gov",
+						"il"
+					],
+					"path": [
+						"govilHF",
+						"api",
+						"GetServices"
+					],
+					"query": [
+						{
+							"key": "culture",
+							"value": "he"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
